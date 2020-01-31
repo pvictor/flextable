@@ -1,13 +1,19 @@
-html_str <- function( x ){
+html_str <- function( x , class = NULL ){
   UseMethod("html_str")
 }
 
 
-html_str.flextable <- function( x ){
+html_str.flextable <- function( x , class = NULL ){
 
   dims <- dim(x)
 
-  out <- "<table style='border-collapse:collapse;'>"
+  out <- "<table %sstyle='border-collapse:collapse;'>"
+  if (!is.null(class)) {
+    class = sprintf("class='%s' ", class)
+  } else {
+    class <- ""
+  }
+  out <- sprintf(out, class)
   if(!is.null(x$caption$value)){
     out <- paste0(out, "<caption>", htmlEscape(x$caption$value), "</caption>" )
   }
